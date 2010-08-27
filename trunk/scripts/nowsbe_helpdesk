@@ -42,8 +42,7 @@ done
 plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'apache2' | egrep -v 'nows_|grep'"
 
 plugin_command "netstat -nlp | grep httpd"
-plugin_command "sed -e '/^$ldapPassword/d' $CONF_DIR/helpdesk_config.php | sed -e '/^[[:space:]]*$/d;/^#/d'"
-pconf_files $CONF_DIR/helpdesk_config.php
+plugin_command "sed -e '/^\$ldapPassword/d' $CONF_DIR/helpdesk_config.php | sed -e '/^[[:space:]]*$/d;/^#/d'"
 FILES=$(find $LOG_DIR -type f)
 [ -n "$FILES" ] && plog_files $LOG_LINES $FILES || section_header "No log files found in $LOG_DIR"
 
