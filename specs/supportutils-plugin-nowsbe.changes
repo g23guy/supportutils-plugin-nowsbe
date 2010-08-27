@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Aug 27 11:13:31 MDT 2010 - jrecord@novell.com
+
+-included SBE in NOWS strings
+-ported to use supportconfig-plugin-resource
+
+-------------------------------------------------------------------
 Fri Aug 20 10:34:10 MDT 2010 - jrecord@novell.com 
 
 -initial build

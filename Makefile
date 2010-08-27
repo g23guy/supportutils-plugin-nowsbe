@@ -1,4 +1,4 @@
-OBSPACKAGE=supportutils-plugin-nows
+OBSPACKAGE=supportutils-plugin-nowsbe
 SVNDIRS=specs scripts man
 VERSION=$(shell awk '/Version:/ { print $$2 }' specs/${OBSPACKAGE}.spec)
 RELEASE=$(shell awk '/Release:/ { print $$2 }' specs/${OBSPACKAGE}.spec)
