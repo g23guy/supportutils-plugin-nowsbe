@@ -15,7 +15,7 @@ License:      GPLv2
 Group:        Documentation/SuSE
 Autoreqprov:  on
 Version:      1.0
-Release:      0.20100827.DEV.2
+Release:      0.20100827.DEV.3
 Source:       %{name}-%{version}.tar.gz
 Summary:      Supportconfig Plugin for NOWS SBE
 BuildRoot:    %{_tmppath}/%{name}-%{version}-build
