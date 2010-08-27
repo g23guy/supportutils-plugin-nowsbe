@@ -1,0 +1,67 @@
+#!/bin/bash
+#############################################################
+# Name:        Supportconfig Plugin for NOWS Amanda
+# Description: Gathers important troubleshooting information
+#              about Novell Open Workgroup Suite
+# License:     GPLv2
+# Author:      Randy Goddard (randage@gmail.com)
+#              Jason Record (jrecord@novell.com)
+# Modified:    2010 Aug 25
+#############################################################
+
+SVER=2.00
+RCFILE="/opt/supportconfig/resources/scplugin.rc"
+LOG_LINES=500	#0 means include the entire file
+LOG_DIR="/var/log/amanda"
+CONF_DIR="/etc/amanda"
+CRON_DIR="/etc/cron.d"
+
+[ -s $RCFILE ] && . $RCFILE || { echo "ERROR: Initializing resource file: $RCFILE"; exit 1; }
+
+section_header "Supportconfig Plugin for NOWS Amanda, v${SVER}"
+
+plugin_command "rpm -qa | egrep -i 'amanda' | sort"
+RPMLIST=$(rpm -qa | egrep -i "amanda" | sort)
+if [ -z "$RPMLIST" ]; then
+  echo "ERROR: NOWS Amanda RPM Package not installed"
+  echo
+  exit 111
+fi
+
+for THISRPM in $RPMLIST
+do
+   validate_rpm $THISRPM
+done
+
+for i in amanda
+do
+	if [ -s /etc/xinet.d/$i ]; then
+		plugin_command "chkconfig -l $i"
+	fi
+done
+
+plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | grep -E 'amanda|amdump|amindexd|amidxtaped' | egrep -v 'nows_|grep'"
+pconf_files "/etc/xinetd.d/amanda*"
+plugin_command "grep amanda /etc/services | sed -e '/^[[:space:]]*#/d'"
+plugin_command "netstat -nlp | grep xinetd"
+plugin_command "getent passwd | grep amandabackup"
+
+for GFILE in $(\ls -A1 $CONF_DIR | sort )
+do
+   if [ -d $CONF_DIR/$GFILE ]; then
+      plugin_command "sudo -u amandabackup /usr/sbin/amcheck $GFILE"
+   fi
+done
+
+for GFILE in $(\ls -A1 $CRON_DIR/amanda-* | sort )
+do
+   if [ -s $GFILE ]; then
+      pconf_files $GFILE
+   fi
+done
+
+FILES=$(find $CONF_DIR -type f)
+pconf_files "$FILES"
+FILES=$(find $LOG_DIR -type f | grep 'log$')
+[ -n "$FILES" ] && plog_files $LOG_LINES $FILES || section_header "No log files found in $LOG_DIR"
+

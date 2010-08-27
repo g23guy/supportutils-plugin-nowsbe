@@ -1,0 +1,31 @@
+#!/bin/bash
+#############################################################
+# Name:        Supportconfig Plugin for NOWS Simba DLU Component
+# Description: Gathers important troubleshooting information
+#              about Novell Open Workgroup Suite
+# License:     GPLv2
+# Author:      Randy Goddard (randage@gmail.com)
+#              Jason Record (jrecord@novell.com)
+# Modified:    2010 Aug 25
+#############################################################
+
+SVER=2.00
+RCFILE="/opt/supportconfig/resources/scplugin.rc"
+
+[ -s $RCFILE ] && . $RCFILE || { echo "ERROR: Initializing resource file: $RCFILE"; exit 1; }
+
+section_header "Supportconfig Plugin for NOWS Simba DLU Component, v${SVER}"
+
+plugin_command "rpm -qa | egrep -i 'dlu' | sort"
+RPMLIST=$(rpm -qa | egrep -i 'dlu' | sort)
+if [ -z "$RPMLIST" ]; then
+  echo "ERROR: NOWS DLU RPM Package not installed"
+  echo
+  exit 111
+fi
+
+for THISRPM in $RPMLIST
+do
+	validate_rpm $THISRPM
+done
+

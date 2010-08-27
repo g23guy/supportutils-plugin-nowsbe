@@ -1,0 +1,50 @@
+#!/bin/bash
+#############################################################
+# Name:        Supportconfig Plugin for NOWS ClamAV
+# Description: Gathers important troubleshooting information
+#              about Novell Open Workgroup Suite
+# License:     GPLv2
+# Author:      Randy Goddard (randage@gmail.com)
+#              Jason Record (jrecord@novell.com)
+# Modified:    2010 Aug 25
+#############################################################
+
+SVER=2.00
+RCFILE="/opt/supportconfig/resources/scplugin.rc"
+LOG_LINES=0	#0 means include the entire file
+LOG_DIR="/var/log"
+CONF_DIR="/etc"
+
+[ -s $RCFILE ] && . $RCFILE || { echo "ERROR: Initializing resource file: $RCFILE"; exit 1; }
+
+section_header "Supportconfig Plugin for NOWS ClamAV, v${SVER}"
+
+plugin_command "rpm -qa | egrep -i 'clam' | sort"
+RPMLIST=$(rpm -qa | egrep -i 'clam' | sort)
+if [ -z "$RPMLIST" ]; then
+  echo "ERROR: NOWS ClamAV RPM Package not installed"
+  echo
+  exit 111
+fi
+
+for THISRPM in $RPMLIST
+do
+	validate_rpm $THISRPM
+done
+
+for i in clamd freshclam
+do
+	if [ -s /etc/init.d/$i ]; then
+		plugin_command "chkconfig -l $i"
+		plugin_command "/etc/init.d/$i status"
+		
+	fi
+done
+
+plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'clamd|freshclam' | egrep -v 'nows_|grep'"
+plugin_command "netstat -nlp | egrep 'clamd|freshclam'"
+plugin_command "clamav-config --libs"
+plugin_command "clamconf"
+pconf_files "$CONF_DIR/clamd.conf"
+plog_files $LOG_LINES $LOG_DIR/clamd
+
