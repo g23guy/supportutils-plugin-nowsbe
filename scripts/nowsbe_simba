@@ -1,0 +1,50 @@
+#!/bin/bash
+#############################################################
+# Name:        Supportconfig Plugin for NOWS Simba
+# Description: Gathers important troubleshooting information
+#              about Novell Open Workgroup Suite
+# License:     GPLv2
+# Author:      Randy Goddard (randage@gmail.com)
+#              Jason Record (jrecord@novell.com)
+# Modified:    2010 Aug 25
+#############################################################
+
+SVER=2.00
+RCFILE="/opt/supportconfig/resources/scplugin.rc"
+LOG_LINES=0	#0 means include the entire file
+LOG_DIR="/var/log/simba"
+CONF_DIR="/var/lib/simba/sbs/conf"
+
+[ -s $RCFILE ] && . $RCFILE || { echo "ERROR: Initializing resource file: $RCFILE"; exit 1; }
+
+section_header "Supportconfig Plugin for NOWS Simba, v${SVER}"
+
+plugin_command "rpm -qa | egrep -i 'simba' | sort"
+RPMLIST=$(rpm -qa | egrep -i 'simba' | sort)
+if [ -z "$RPMLIST" ]; then
+  echo "ERROR: NOWS Simba RPM Package not installed"
+  echo
+  exit 111
+fi
+
+for THISRPM in $RPMLIST
+do
+   validate_rpm $THISRPM
+done
+
+for i in simba
+do
+	if [ -s /etc/init.d/$i ]; then
+		plugin_command "chkconfig -l $i"
+		plugin_command "/etc/init.d/$i status"
+		
+	fi
+done
+
+plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'simba' | egrep -v 'nows_|grep'"
+
+FILES=$(find $CONF_DIR -type f | grep -v config.key)
+pconf_files $FILES
+FILES=$(find $LOG_DIR -type f)
+[ -n "$FILES" ] && plog_files $LOG_LINES $FILES || section_header "No log files found in $LOG_DIR"
+
