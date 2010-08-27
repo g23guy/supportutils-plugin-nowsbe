@@ -40,7 +40,7 @@ do
 	fi
 done
 
-plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | grep -E 'amanda|amdump|amindexd|amidxtaped' | egrep -v 'nows_|grep'"
+plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'amanda|amdump|amindexd|amidxtaped' | egrep -v 'nowsbe_|grep'"
 pconf_files "/etc/xinetd.d/amanda*"
 plugin_command "grep amanda /etc/services | sed -e '/^[[:space:]]*#/d'"
 plugin_command "netstat -nlp | grep xinetd"

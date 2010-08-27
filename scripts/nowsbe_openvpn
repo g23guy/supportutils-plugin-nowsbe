@@ -41,7 +41,7 @@ do
 	fi
 done
 
-plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | grep -E 'openvpn' | egrep -v 'nows_openvpn|grep'"
+plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'openvpn' | egrep -v 'nowsbe_|grep'"
 plugin_command "netstat -nlp | egrep '1194|openvpn'"
 pconf_files $CONF_DIR/server.conf
 plog_files $LOG_LINES $LOG_DIR/openvpn-status.log
