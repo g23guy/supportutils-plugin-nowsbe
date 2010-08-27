@@ -1,15 +1,15 @@
 #!/bin/bash
 #############################################################
-# Name:        Supportconfig Plugin for NOWS Amanda
-# Description: Gathers important troubleshooting information
-#              about Novell Open Workgroup Suite
+# Name:        Supportconfig Plugin for NOWS SBE Amanda
+# Description: Gathers Amanda network backup solution 
+#              troubleshooting information
 # License:     GPLv2
 # Author:      Randy Goddard (randage@gmail.com)
 #              Jason Record (jrecord@novell.com)
-# Modified:    2010 Aug 25
+# Modified:    2010 Aug 27
 #############################################################
 
-SVER=2.00
+SVER=2.01
 RCFILE="/opt/supportconfig/resources/scplugin.rc"
 LOG_LINES=500	#0 means include the entire file
 LOG_DIR="/var/log/amanda"
@@ -18,12 +18,12 @@ CRON_DIR="/etc/cron.d"
 
 [ -s $RCFILE ] && . $RCFILE || { echo "ERROR: Initializing resource file: $RCFILE"; exit 1; }
 
-section_header "Supportconfig Plugin for NOWS Amanda, v${SVER}"
+section_header "Supportconfig Plugin for NOWS SBE Amanda, v${SVER}"
 
 plugin_command "rpm -qa | egrep -i 'amanda' | sort"
 RPMLIST=$(rpm -qa | egrep -i "amanda" | sort)
 if [ -z "$RPMLIST" ]; then
-  echo "ERROR: NOWS Amanda RPM Package not installed"
+  echo "ERROR: Amanda package(s) not installed"
   echo
   exit 111
 fi

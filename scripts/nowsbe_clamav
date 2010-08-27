@@ -1,15 +1,15 @@
 #!/bin/bash
 #############################################################
-# Name:        Supportconfig Plugin for NOWS ClamAV
-# Description: Gathers important troubleshooting information
-#              about Novell Open Workgroup Suite
+# Name:        Supportconfig Plugin for NOWS SBE ClamAV
+# Description: Gathers Clam antivirus mailserver scanner
+#              troubleshooting information
 # License:     GPLv2
 # Author:      Randy Goddard (randage@gmail.com)
 #              Jason Record (jrecord@novell.com)
-# Modified:    2010 Aug 25
+# Modified:    2010 Aug 27
 #############################################################
 
-SVER=2.00
+SVER=2.01
 RCFILE="/opt/supportconfig/resources/scplugin.rc"
 LOG_LINES=0	#0 means include the entire file
 LOG_DIR="/var/log"
@@ -17,12 +17,12 @@ CONF_DIR="/etc"
 
 [ -s $RCFILE ] && . $RCFILE || { echo "ERROR: Initializing resource file: $RCFILE"; exit 1; }
 
-section_header "Supportconfig Plugin for NOWS ClamAV, v${SVER}"
+section_header "Supportconfig Plugin for NOWS SBE ClamAV, v${SVER}"
 
 plugin_command "rpm -qa | egrep -i 'clam' | sort"
 RPMLIST=$(rpm -qa | egrep -i 'clam' | sort)
 if [ -z "$RPMLIST" ]; then
-  echo "ERROR: NOWS ClamAV RPM Package not installed"
+  echo "ERROR: ClamAV package(s) not installed"
   echo
   exit 111
 fi
