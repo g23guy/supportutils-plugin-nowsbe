@@ -1,5 +1,5 @@
 #
-# spec file for package supportutils-plugin-nowsbe (Version 1.0-0)
+# spec file for package supportutils-plugin-nowsbe (Version 1.0-1)
 #
 # Copyright (C) 2010 Novell, Inc.
 # This file and all modifications and additions to the pristine
@@ -15,7 +15,7 @@ License:      GPLv2
 Group:        Documentation/SuSE
 Autoreqprov:  on
 Version:      1.0
-Release:      0.20100827.DEV.4
+Release:      1
 Source:       %{name}-%{version}.tar.gz
 Summary:      Supportconfig Plugin for NOWS SBE
 BuildRoot:    %{_tmppath}/%{name}-%{version}-build
