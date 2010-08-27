@@ -41,7 +41,7 @@ do
 	fi
 done
 
-plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'clamd|freshclam' | egrep -v 'nows_|grep'"
+plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'clamd|freshclam' | egrep -v 'nowsbe_|grep'"
 plugin_command "netstat -nlp | egrep 'clamd|freshclam'"
 plugin_command "clamav-config --libs"
 plugin_command "clamconf"

@@ -41,7 +41,7 @@ do
 	fi
 done
 
-plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'gwia|mailscanner|postfix' | egrep -v 'nows_|grep'"
+plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'gwia|mailscanner|postfix' | egrep -v 'nowsbe_|grep'"
 plugin_command "netstat -nlp | egrep ':25 |:26 '"
 plugin_command "/usr/sbin/MailScanner -v"
 pconf_files "$CONF_DIR/MailScanner/MailScanner.conf $CONF_DIR/sysconfig/postfix $CONF_DIR/postfix/main.cf /opt/novell/groupwise/agents/share/gwia.cfg"

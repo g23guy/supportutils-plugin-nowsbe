@@ -39,7 +39,7 @@ do
 	fi
 done
 
-plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'hylafax' | egrep -v 'nows_|grep'"
+plugin_command "ps axwwo user,pid,ppid,%cpu,%mem,vsz,rss,stat,time,cmd | egrep 'hylafax' | egrep -v 'nowsbe_|grep'"
 
 FILES=$(find $CONF_DIR -maxdepth 1 -type f)
 pconf_files $FILES
