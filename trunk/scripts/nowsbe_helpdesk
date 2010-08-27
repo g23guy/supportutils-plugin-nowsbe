@@ -1,15 +1,14 @@
 #!/bin/bash
 #############################################################
-# Name:        Supportconfig Plugin for NOWS Help Desk
-# Description: Gathers important troubleshooting information
-#              about Novell Open Workgroup Suite
+# Name:        Supportconfig Plugin for NOWS SBE Help Desk
+# Description: Gathers Help Desk troubleshooting information
 # License:     GPLv2
 # Author:      Randy Goddard (randage@gmail.com)
 #              Jason Record (jrecord@novell.com)
-# Modified:    2010 Aug 25
+# Modified:    2010 Aug 27
 #############################################################
 
-SVER=2.00
+SVER=2.01
 RCFILE="/opt/supportconfig/resources/scplugin.rc"
 LOG_LINES=0	#0 means include the entire file
 LOG_DIR="/var/log/apache2"
@@ -17,12 +16,12 @@ CONF_DIR="/srv/www/htdocs/helpdesk/includes"
 
 [ -s $RCFILE ] && . $RCFILE || { echo "ERROR: Initializing resource file: $RCFILE"; exit 1; }
 
-section_header "Supportconfig Plugin for NOWS Help Desk, v${SVER}"
+section_header "Supportconfig Plugin for NOWS SBE Help Desk, v${SVER}"
 
 plugin_command "rpm -qa | egrep -i 'apache2|helpdesk' | sort"
 RPMLIST=$(rpm -qa | egrep -i 'apache2|helpdesk' | sort)
 if [ -z "$RPMLIST" ]; then
-  echo "ERROR: NOWS Help Desk RPM Package not installed"
+  echo "ERROR: Help Desk package(s) not installed"
   echo
   exit 111
 fi

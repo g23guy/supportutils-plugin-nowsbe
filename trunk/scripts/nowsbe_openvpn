@@ -1,15 +1,15 @@
 #!/bin/bash
 #############################################################
-# Name:        Supportconfig Plugin for NOWS OpenVPN
-# Description: Gathers important troubleshooting information
-#              about SUSE Linux Enterprise Point of Service
+# Name:        Supportconfig Plugin for NOWS SBE OpenVPN
+# Description: Gathers open virtual private network
+#              troubleshooting information
 # License:     GPLv2
 # Author:      Randy Goddard (randage@gmail.com)
 #              Jason Record (jrecord@novell.com)
-# Modified:    2010 Aug 25
+# Modified:    2010 Aug 27
 #############################################################
 
-SVER=2.00
+SVER=2.01
 RCFILE="/opt/supportconfig/resources/scplugin.rc"
 LOG_LINES=0	#0 means include the entire file
 LOG_DIR=/etc/openvpn
@@ -17,12 +17,12 @@ CONF_DIR=/etc/openvpn
 
 [ -s $RCFILE ] && . $RCFILE || { echo "ERROR: Initializing resource file: $RCFILE"; exit 1; }
 
-section_header "Supportconfig Plugin for NOWS OpenVPN, v${SVER}"
+section_header "Supportconfig Plugin for NOWS SBE OpenVPN, v${SVER}"
 
 plugin_command "rpm -qa | egrep -i 'openvpn' | sort"
 RPMLIST=$(rpm -qa | egrep -i "openvpn" | sort)
 if [ -z "$RPMLIST" ]; then
-  echo "ERROR: NOWS OpenVPN RPM Package not installed"
+  echo "ERROR: OpenVPN package(s) not installed"
   echo
   exit 111
 fi
