@@ -12,6 +12,7 @@ install: dist
 	@echo ==================================================================
 	@echo Installing source files into build directory
 	@echo ==================================================================
+	svn up
 	cp src/$(SRCFILE).gz $(BUILDDIR)/SOURCES
 	cp specs/$(OBSPACKAGE).spec $(BUILDDIR)/SPECS
 	cp specs/$(OBSPACKAGE).changes $(BUILDDIR)/SPECS
@@ -76,7 +77,6 @@ buildci: allclean install
 	cp $(BUILDDIR)/SRPMS/$(OBSPACKAGE)-$(VERSION)-$(RELEASE).src.rpm .
 	cp $(BUILDDIR)/RPMS/noarch/$(OBSPACKAGE)-$(VERSION)-$(RELEASE).noarch.rpm .
 	@echo
-	svn up
 	svn ci -m "Build SVN Check In: $(OBSPACKAGE)-$(VERSION)-$(RELEASE)"
 	@ls -al ${LS_OPTIONS}
 	@echo
