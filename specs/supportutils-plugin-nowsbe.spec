@@ -15,7 +15,7 @@ License:      GPLv2
 Group:        Documentation/SuSE
 Autoreqprov:  on
 Version:      1.0
-Release:      1
+Release:      1.20101021.PTF.1
 Source:       %{name}-%{version}.tar.gz
 Summary:      Supportconfig Plugin for NOWS SBE
 BuildRoot:    %{_tmppath}/%{name}-%{version}-build
@@ -46,14 +46,16 @@ gzip -9f nowsbe-plugin.8
 %install
 pwd;ls -la
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/opt/supportconfig/plugins
+install -d $RPM_BUILD_ROOT/usr/lib/supportconfig/plugins
 install -d $RPM_BUILD_ROOT/usr/share/man/man8
-install -m 0544 nowsbe_* $RPM_BUILD_ROOT/opt/supportconfig/plugins
+install -m 0544 nowsbe_* $RPM_BUILD_ROOT/usr/lib/supportconfig/plugins
 install -m 0644 nowsbe-plugin.8.gz $RPM_BUILD_ROOT/usr/share/man/man8/nowsbe-plugin.8.gz
 
 %files
 %defattr(-,root,root)
-/opt/supportconfig/plugins/nowsbe_*
+/usr/lib/supportconfig
+/usr/lib/supportconfig/plugins
+/usr/lib/supportconfig/plugins/nowsbe_*
 /usr/share/man/man8/nowsbe-plugin.8.gz
 
 %clean

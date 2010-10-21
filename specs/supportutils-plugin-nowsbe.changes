@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Oct 21 15:57:21 MDT 2010 - jrecord@novell.com
+
+-changed /opt/supportconfig to /usr/lib/suppportconfig
+
+-------------------------------------------------------------------
 Fri Aug 27 11:13:31 MDT 2010 - jrecord@novell.com
 
 -included SBE in NOWS strings
