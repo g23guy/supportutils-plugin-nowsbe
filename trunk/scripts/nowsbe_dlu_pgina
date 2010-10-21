@@ -6,11 +6,11 @@
 # License:     GPLv2
 # Author:      Randy Goddard (randage@gmail.com)
 #              Jason Record (jrecord@novell.com)
-# Modified:    2010 Aug 27
+# Modified:    2010 Oct 21
 #############################################################
 
-SVER=2.01
-RCFILE="/opt/supportconfig/resources/scplugin.rc"
+SVER=2.02
+RCFILE="/usr/lib/supportconfig/resources/scplugin.rc"
 
 [ -s $RCFILE ] && . $RCFILE || { echo "ERROR: Initializing resource file: $RCFILE"; exit 1; }
 
